@@ -1,20 +1,16 @@
 package com.example.carownersfilter
 
-import androidx.appcompat.app.AppCompatActivity
+
 import android.os.Bundle
-import android.os.Environment
-import androidx.lifecycle.lifecycleScope
+import android.view.Menu
+import androidx.appcompat.app.AppCompatActivity
 import com.example.carownersfilter.model.CarOwner
 import com.example.carownersfilter.repository.CarOwnerRepository
 import com.example.carownersfilter.repository.FilterCarOwnerHelper
-import com.example.carownersfilter.repository.FilterCarOwnerHelperImpl
-import com.example.carownersfilter.viewmodel.CarOwnersViewModel
 import com.example.carownersfilter.viewmodel.FiltersViewModel
-import com.example.carownersfilter.viewmodel.observeChange
-import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import org.koin.android.ext.android.inject
-import timber.log.Timber
-import java.io.File
+
+
 
 class MainActivity : AppCompatActivity() {
     private val carOwnerRepository:CarOwnerRepository by inject()
@@ -43,5 +39,11 @@ class MainActivity : AppCompatActivity() {
 //        }
 
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.actionbar, menu)
+        return true
     }
 }
