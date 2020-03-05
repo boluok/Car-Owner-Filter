@@ -5,9 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.carownersfilter.R
+import com.example.carownersfilter.utils.CheckPermissionUtil
 import com.example.carownersfilter.utils.loadImage
+import com.github.euzee.permission.PermissionCallback
 import kotlinx.android.synthetic.main.fragment_get_permissions.*
 
 class GetPermissionsFragment : BaseFragment() {
@@ -28,7 +31,18 @@ class GetPermissionsFragment : BaseFragment() {
 
     private fun updateUI() {
         imageView2.loadImage(R.drawable.access_storage,context!!)
-        buttonPermissions.setOnClickListener { }
+        buttonPermissions.setOnClickListener {
+            CheckPermissionUtil.checkWriteSd(context!!,object :PermissionCallback(){
+                override fun onPermissionGranted() {
+                    findNavController().navigate(R.id.permissionToSearchingFile)
+                }
+
+                override fun onPermissionDenied() {
+                    Toast.makeText(context!!,"We need this permission to proceed",Toast.LENGTH_SHORT).show()
+                }
+
+            })
+        }
     }
 
 

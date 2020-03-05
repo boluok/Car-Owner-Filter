@@ -18,7 +18,7 @@ import java.io.File
 
 class MainActivity : AppCompatActivity() {
     private val carOwnerRepository:CarOwnerRepository by inject()
-    private val carOwnerViewModel:CarOwnersViewModel by inject()
+
     private val filtersViewModel:FiltersViewModel by inject()
     private val filterCarOwnerHelper:FilterCarOwnerHelper by inject()
     private lateinit var carOwnersList:List<CarOwner>
