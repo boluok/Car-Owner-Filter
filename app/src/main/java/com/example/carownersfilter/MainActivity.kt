@@ -25,20 +25,22 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val path = this.filesDir.absolutePath
-        println(path)
-       val fileDir =  this.getExternalFilesDir(null)
-        println(fileDir?.absoluteFile)
+        supportActionBar?.hide()
 
-      // val file = File("$path/decagon/car_ownsers_data.csv")
-
-        carOwnerViewModel.getAllCarOwners().observeChange(this@MainActivity){
-            carOwnersList = it
-            filtersViewModel.getAllFiltersAPI()
-        }
-        filtersViewModel.allFiltersResponse.observeChange(this@MainActivity){
-            Timber.d("FOR THESE FILTER ${it[1]} I GOT \n ${filterCarOwnerHelper.getAllCarOwnersForFilter(it[1],carOwnersList).takeLast(3)}")
-        }
+//        val path = this.filesDir.absolutePath
+//        println(path)
+//       val fileDir =  this.getExternalFilesDir(null)
+//        println(fileDir?.absoluteFile)
+//
+//      // val file = File("$path/decagon/car_ownsers_data.csv")
+//
+//        carOwnerViewModel.getAllCarOwners().observeChange(this@MainActivity){
+//            carOwnersList = it
+//            filtersViewModel.getAllFiltersAPI()
+//        }
+//        filtersViewModel.allFiltersResponse.observeChange(this@MainActivity){
+//            Timber.d("FOR THESE FILTER ${it[1]} I GOT \n ${filterCarOwnerHelper.getAllCarOwnersForFilter(it[1],carOwnersList).takeLast(3)}")
+//        }
 
 
     }

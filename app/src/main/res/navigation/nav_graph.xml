@@ -1,5 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashScreen">
+    <fragment
+        android:id="@+id/splashScreen"
+        android:name="com.example.carownersfilter.views.SplashScreenFragment"
+        android:label="fragment_registration"
+        tools:layout="@layout/fragment_splash_screen">
+        <action
+            android:id="@+id/action_splash_screen_to_permissionsFragment"
+            app:destination="@id/permissionsFragment"
+            app:popUpTo="@id/nav_graph"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_out_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splash_screen_to_filtersFragment"
+            app:destination="@id/myFiltersFragment"
+            app:popUpTo="@id/nav_graph"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_out_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpToInclusive="true" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/permissionsFragment"
+        android:name="com.example.carownersfilter.views.GetPermissionsFragment"
+        android:label="permissions_fragment"
+        tools:layout="@layout/fragment_get_permissions">
+        <action
+            android:id="@+id/permissionToSearchingFile"
+            app:destination="@id/searchingFileFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+<!--        <action-->
+<!--            android:id="@+id/action_firstFragment_to_endChatFragment"-->
+<!--            app:destination="@id/endChatFragment"-->
+<!--            app:popUpTo="@id/nav_graph"-->
+<!--            app:popUpToInclusive="true" />-->
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchingFileFragment"
+        android:name="com.example.carownersfilter.views.GettingFileFragment"
+        android:label="Searching Fragment"
+        tools:layout="@layout/fragment_getting_file">
+                <action
+                    android:id="@+id/searchingToCouldntFind"
+                    app:destination="@id/couldntFindFile"
+                    app:popUpTo="@id/nav_graph"
+                    app:popUpToInclusive="true" />
+                <action
+                    android:id="@+id/searchingToMyFilters"
+                    app:destination="@id/myFiltersFragment"
+                    app:popUpTo="@id/nav_graph"
+                    app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/couldntFindFile"
+        android:name="com.example.carownersfilter.views.CouldntFindFileFragment"
+        android:label="Could not find File"
+        tools:layout="@layout/fragment_couldnt_find_file">
+                <action
+                    android:id="@+id/action_couldntFindToMyFilters"
+                    app:destination="@id/myFiltersFragment"
+                    app:popUpTo="@id/nav_graph"
+                    app:popUpToInclusive="true" />
+        <!--        <action-->
+        <!--            android:id="@+id/action_firstFragment_to_endChatFragment"-->
+        <!--            app:destination="@id/endChatFragment"-->
+        <!--            app:popUpTo="@id/nav_graph"-->
+        <!--            app:popUpToInclusive="true" />-->
+    </fragment>
+
+    <fragment
+        android:id="@+id/myFiltersFragment"
+        android:name="com.example.carownersfilter.views.MyFiltersFragment"
+        android:label="My Filters Fragment"
+        tools:layout="@layout/fragment_my_filters">
+                <action
+                    android:id="@+id/myFiltersToFilteredCarOwners"
+                    app:destination="@id/filteredCarOwnersFragment"
+                    app:popUpTo="@id/nav_graph"
+                    app:popUpToInclusive="true" />
+        <!--        <action-->
+        <!--            android:id="@+id/action_firstFragment_to_endChatFragment"-->
+        <!--            app:destination="@id/endChatFragment"-->
+        <!--            app:popUpTo="@id/nav_graph"-->
+        <!--            app:popUpToInclusive="true" />-->
+    </fragment>
+
+    <fragment
+        android:id="@+id/filteredCarOwnersFragment"
+        android:name="com.example.carownersfilter.views.FilteredCarOwnersFragment"
+        android:label="My Filters Fragment"
+        tools:layout="@layout/fragment_my_filters">
+        <!--        <action-->
+        <!--            android:id="@+id/action_firstFragment_to_secondFragment"-->
+        <!--            app:destination="@id/secondFragment"-->
+        <!--            app:popUpTo="@id/nav_graph"-->
+        <!--            app:popUpToInclusive="true" />-->
+        <!--        <action-->
+        <!--            android:id="@+id/action_firstFragment_to_endChatFragment"-->
+        <!--            app:destination="@id/endChatFragment"-->
+        <!--            app:popUpTo="@id/nav_graph"-->
+        <!--            app:popUpToInclusive="true" />-->
+    </fragment>
 </navigation>
