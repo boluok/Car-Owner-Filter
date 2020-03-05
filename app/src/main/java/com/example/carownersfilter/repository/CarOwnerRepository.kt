@@ -2,6 +2,7 @@ package com.example.carownersfilter.repository
 
 import com.example.carownersfilter.local.room.dao.CarOwnerDao
 import com.example.carownersfilter.model.CarOwner
+import com.example.carownersfilter.model.Filters
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
@@ -11,6 +12,7 @@ interface CarOwnerRepository {
      fun getAllCarOwners():Flow<List<CarOwner>>
     suspend fun updateCarOwnersDB(carOwners: List<CarOwner>)
     suspend fun saveCSCData(csvData:List<List<String>>)
+
 }
 
 class CarOwnerRepositoryImpl(private val carOwnerDao: CarOwnerDao):CarOwnerRepository{
@@ -37,4 +39,6 @@ class CarOwnerRepositoryImpl(private val carOwnerDao: CarOwnerDao):CarOwnerRepos
             )
     }
 
+
 }
+
