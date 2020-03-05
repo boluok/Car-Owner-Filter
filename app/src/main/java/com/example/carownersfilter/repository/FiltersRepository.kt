@@ -11,7 +11,7 @@ interface FiltersRepository{
 
 class FiltersRepositoryImpl(private val carOwnersFilterAPI: CarOwnersFilterAPI):BaseRepository(),FiltersRepository{
     override suspend fun getFiltersRemote(): UseCaseResult<List<Filters>> {
-        return safeApiGETCall(carOwnersFilterAPI::getFiltersAsync,{it.isNullOrEmpty()},{
+        return safeApiGETCall(carOwnersFilterAPI::getFiltersAsync,{!it.isNullOrEmpty()},{
 
         })
     }
