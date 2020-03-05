@@ -27,6 +27,15 @@
             app:popEnterAnim="@anim/slide_out_left"
             app:popExitAnim="@anim/slide_out_right"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splash_screen_to_CouldntFragment"
+            app:destination="@id/couldntFindFile"
+            app:popUpTo="@id/nav_graph"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_out_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment

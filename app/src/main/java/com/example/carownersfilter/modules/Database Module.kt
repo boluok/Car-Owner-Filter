@@ -2,6 +2,7 @@ package com.example.carownersfilter.modules
 
 import androidx.room.Room
 import com.example.carownersfilter.local.room.CarOwnerDatabase
+import com.example.carownersfilter.local.room.PaperPrefs
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 
@@ -14,5 +15,6 @@ val dbModules = module {
     //Dao
     val createAtStart = false
     single(createdAtStart = createAtStart) { get<CarOwnerDatabase>().carOwnerDao() }
+    single { PaperPrefs(androidApplication()) }
 
 }

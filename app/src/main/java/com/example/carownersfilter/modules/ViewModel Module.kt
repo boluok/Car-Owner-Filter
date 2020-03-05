@@ -7,7 +7,7 @@ import org.koin.dsl.module
 
 
 val viewmodelModule = module{
-    viewModel{ CarOwnersViewModel(carOwnerRepository = get()) }
+    viewModel{ CarOwnersViewModel(carOwnerRepository = get(),paperPrefs = get()) }
     viewModel{ FiltersViewModel(filtersRepository = get()) }
 
 }
