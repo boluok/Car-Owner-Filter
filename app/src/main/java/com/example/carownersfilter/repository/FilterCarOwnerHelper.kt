@@ -15,7 +15,7 @@ class FilterCarOwnerHelperImpl():FilterCarOwnerHelper{
     }
 
     fun List<CarOwner>.filterWith(filters: Filters):List<CarOwner>{
-        return this.filter { hasSameColors(it,filters) && hasTheSameCountries(it,filters)   }
+        return this.filter { hasSameColors(it,filters) && hasTheSameCountries(it,filters)  && isTheSameGender(it,filters)  }
     }
 
     private fun hasTheSameCountries(carOwner: CarOwner, filters: Filters): Boolean {

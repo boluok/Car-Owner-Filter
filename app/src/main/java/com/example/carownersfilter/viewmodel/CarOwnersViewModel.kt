@@ -10,6 +10,8 @@ import com.example.carownersfilter.R
 import com.example.carownersfilter.local.room.PaperPrefs
 import com.example.carownersfilter.local.room.getBooleanPref
 import com.example.carownersfilter.local.room.savePref
+import com.example.carownersfilter.model.CarOwner
+import com.example.carownersfilter.model.Filters
 import com.example.carownersfilter.repository.CarOwnerRepository
 import com.example.carownersfilter.utils.CheckPermissionUtil
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
@@ -21,16 +23,29 @@ class CarOwnersViewModel(private  val carOwnerRepository: CarOwnerRepository,pri
 
     fun getAllCarOwners() =  carOwnerRepository.getAllCarOwners().asLiveData()
     val onDataSaveSuccessful = SingleLiveEvent<FileStatus>()
+    var allCarOwners = listOf<CarOwner>()
 
+
+    init {
+        viewModelScope.launch {
+            allCarOwners = carOwnerRepository.getAllCarOwnersList()
+        }
+
+    }
 
      fun  getAndSaveCSV(context:Context){
         viewModelScope.launch {
             val csvData = withContext(IO){context.resources.openRawResource(R.raw.car_ownsers_data)}
             val rows: List<List<String>> = withContext(IO){csvReader().readAll(csvData)}
-            carOwnerRepository.saveCSCData(rows)
+            allCarOwners =  carOwnerRepository.saveCSCData(rows)
             paperPrefs.savePref(PaperPrefs.DATALOADED,true)
             onDataSaveSuccessful.value = FileStatus.FOUND
         }
+    }
+
+
+    fun getCarOwnersForFilter(filters: Filters):List<CarOwner>{
+        return carOwnerRepository.getAllCarOwnersForFilter(filters,allCarOwners)
     }
 
     fun getStatus(context:Context):UserStatus{
