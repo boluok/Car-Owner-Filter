@@ -7,9 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.Group
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.carownersfilter.MainActivity
 import com.example.carownersfilter.R
+import com.example.carownersfilter.model.Filters
+import com.example.carownersfilter.utils.loadImage
+import com.example.carownersfilter.utils.normalcase
 import com.example.carownersfilter.utils.updateRecycler2
 import com.example.carownersfilter.viewmodel.FiltersViewModel
 import com.example.carownersfilter.viewmodel.observeChange
@@ -21,6 +26,9 @@ class MyFiltersFragment : Fragment() {
 
     private val filtersViewModel:FiltersViewModel by inject()
     private var adaptor: RecyclerView.Adapter<*>? = null
+    val noImageViews:List<View> by lazy {
+        listOf(imageViewNoFilters,textViewNoFilters)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,26 +44,64 @@ class MyFiltersFragment : Fragment() {
         (activity as MainActivity).supportActionBar?.title = "My Filters"
         setUpRecycler()
         setUpObservers()
+        updateUI()
         filtersViewModel.getAllFiltersAPI()
+    }
+
+    private fun updateUI() {
+        swipe.setOnRefreshListener { filtersViewModel.getAllFiltersAPI() }
     }
 
     private fun setUpObservers() {
         filtersViewModel.allFiltersResponse.observeChange(viewLifecycleOwner){
-            adaptor?.notifyDataSetChanged()
+            swipe.isRefreshing = false
+            updateFilters(it)
+        }
+        filtersViewModel.showLoading.observeChange(viewLifecycleOwner){
+            swipe.isRefreshing = true
         }
     }
 
     private fun setUpRecycler() {
-         adaptor = filterRecycler.updateRecycler2(context!!, filtersViewModel.allFilters,R.layout.item_filter, listOf(R.id.ivProfileImage,R.id.textViewDateRange),{innerViews,item ->
+         adaptor = filterRecycler.updateRecycler2(context!!, filtersViewModel.allFilters,R.layout.item_filter, listOf(R.id.ivProfileImage,R.id.groupCountry,R.id.textViewDateRange,R.id.textViewGender,R.id.textViewCountry,R.id.textViewColor),{ innerViews, item ->
             val ivProfileImage = innerViews[R.id.ivProfileImage] as ImageView
             val tvDateRange = innerViews[R.id.textViewDateRange] as TextView
-            val tvGender = innerViews[R.id.textViewGender] as ImageView
+            val tvGender = innerViews[R.id.textViewGender] as TextView
             val tvCountry = innerViews[R.id.textViewCountry] as TextView
             val tvColor = innerViews[R.id.textViewColor] as TextView
+             val countryGroup = innerViews[R.id.groupCountry] as Group
+             ivProfileImage.loadImage(item.avatar,context!!)
+             tvDateRange.text = item.fullName
+             tvGender.text = item.gender.normalcase()
+             tvColor.text = item.colors.joinToString(separator = ", ")
+             tvCountry.text = item.countries.joinToString(separator = ", ")
+             if(item.countries.isEmpty()){
+                 countryGroup.visibility = View.GONE
+             }else{
+                 countryGroup.visibility = View.VISIBLE
+             }
+
+
 
         },{item ->
 
         })
+    }
+
+    private fun updateFilters(filters: List<Filters>) {
+        if(filters.isNullOrEmpty()){
+            filterRecycler.visibility = View.GONE
+            noImageViews.forEach { it.visibility = View.VISIBLE }
+        }else{
+            noImageViews.forEach { it.visibility = View.GONE }
+            filterRecycler.visibility = View.VISIBLE
+
+        }
+        val diffCallBack = FilersDiffUtils(filtersViewModel.allFilters,filters)
+        val diffResult = DiffUtil.calculateDiff(diffCallBack)
+        filtersViewModel.allFilters.clear()
+        filtersViewModel.allFilters.addAll(filters)
+        adaptor?.let { it1 -> diffResult.dispatchUpdatesTo(it1) }
     }
 
 

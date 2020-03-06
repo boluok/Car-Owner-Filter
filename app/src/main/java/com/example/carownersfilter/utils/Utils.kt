@@ -92,3 +92,6 @@ object Utils{
 
 }
 
+fun String.normalcase(): String{
+    return this.toLowerCase().capitalize()
+}
