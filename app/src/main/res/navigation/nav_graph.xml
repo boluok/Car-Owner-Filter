@@ -121,7 +121,7 @@
         app:exitAnim="@anim/slide_out_left"
         app:popEnterAnim="@anim/slide_out_left"
         app:popExitAnim="@anim/slide_out_right"
-        tools:layout="@layout/fragment_my_filters">
+        tools:layout="@layout/fragment_filtered_car_owners">
         <argument
             android:name="filter"
             app:argType="com.example.carownersfilter.model.Filters" />
