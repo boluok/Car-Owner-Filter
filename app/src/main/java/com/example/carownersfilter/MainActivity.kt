@@ -2,6 +2,7 @@ package com.example.carownersfilter
 
 
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
@@ -21,6 +22,11 @@ class MainActivity : BaseActivity() {
         )
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        setUpNavigation()
+    }
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -29,18 +35,11 @@ class MainActivity : BaseActivity() {
         return true
     }
 
-
-    }
 
     private fun setUpNavigation() {
         initFragNavController(this, baseFragments, "MAIN", supportFragmentManager, R.id.root)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.actionbar, menu)
-        return true
-    }
 
     companion object {
         val SPLASH_SCREEN = FragNavController.TAB1
@@ -67,6 +66,7 @@ class MainActivity : BaseActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
     private fun setActionBar(fragment: Fragment?) {
         if (supportActionBar != null && basefragNavController != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(!basefragNavController.isRootFragment)
@@ -82,5 +82,6 @@ class MainActivity : BaseActivity() {
         setActionBar(fragment)
 
 
+    }
 }
 

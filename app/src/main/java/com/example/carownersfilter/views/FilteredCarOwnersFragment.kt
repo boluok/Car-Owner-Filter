@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.constraintlayout.widget.Group
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +15,6 @@ import com.example.carownersfilter.model.Filters
 import com.example.carownersfilter.utils.argument
 import com.example.carownersfilter.utils.updateRecycler2
 import com.example.carownersfilter.utils.withArguments
-import com.example.carownersfilter.viewmodel.CarOwnersViewModel
 import kotlinx.android.synthetic.main.fragment_filtered_car_owners.*
 import com.example.carownersfilter.utils.loadImage
 import com.example.carownersfilter.utils.normalcase
