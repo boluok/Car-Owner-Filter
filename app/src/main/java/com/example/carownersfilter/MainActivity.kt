@@ -2,6 +2,7 @@ package com.example.carownersfilter
 
 
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
@@ -14,13 +15,15 @@ class MainActivity : BaseActivity() {
     private val baseFragments by lazy {
         listOf(
             SplashScreenFragment(),
-            GetPermissionsFragment(),
-            GettingFileFragment(),
-            MyFiltersFragment(),
-            CouldntFindFileFragment()
+            MyFiltersFragment()
         )
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        setUpNavigation()
+    }
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -29,25 +32,18 @@ class MainActivity : BaseActivity() {
         return true
     }
 
-
-    }
 
     private fun setUpNavigation() {
         initFragNavController(this, baseFragments, "MAIN", supportFragmentManager, R.id.root)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.actionbar, menu)
-        return true
-    }
 
     companion object {
         val SPLASH_SCREEN = FragNavController.TAB1
-        val GET_PERMISSION = FragNavController.TAB2
-        val GETTING_FILE = FragNavController.TAB3
-        val MYFILTERS = FragNavController.TAB4
-        val NO_FILE = FragNavController.TAB5
+        val MYFILTERS = FragNavController.TAB2
+//        val GETTING_FILE = FragNavController.TAB3
+//        val MYFILTERS = FragNavController.TAB4
+//        val NO_FILE = FragNavController.TAB5
     }
 
     override fun onFragmentTransaction(
@@ -67,6 +63,7 @@ class MainActivity : BaseActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
     private fun setActionBar(fragment: Fragment?) {
         if (supportActionBar != null && basefragNavController != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(!basefragNavController.isRootFragment)
@@ -82,5 +79,6 @@ class MainActivity : BaseActivity() {
         setActionBar(fragment)
 
 
+    }
 }
 

@@ -16,9 +16,10 @@ import com.example.carownersfilter.viewmodel.UserStatus.*
 import kotlinx.android.synthetic.main.fragment_splash_screen.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class SplashScreenFragment :BaseFragment(){
-    private val carOwnerViewModel: CarOwnersViewModel by sharedViewModel()
+    private val carOwnerViewModel: CarOwnersViewModel by viewModel()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,14 +38,16 @@ class SplashScreenFragment :BaseFragment(){
         logoIV.loadImage(R.drawable.app_logo,context!!)
         (activity as MainActivity).supportActionBar?.hide()
         Handler().postDelayed({
-            when(carOwnerViewModel.getStatus(context!!)){
+            val status = carOwnerViewModel.getStatus(context!!)
+            println("Status ${status}")
+            when(status){
                 PERMISSION_GRANTED_DATA_LOADED -> mFragmentNavigation.switchFragment(MainActivity.MYFILTERS)
-                PERMISSION_GRANTED_NO_FILE -> mFragmentNavigation.switchFragment(MainActivity.NO_FILE)
-                NO_PERMISSION -> mFragmentNavigation.switchFragment(MainActivity.GET_PERMISSION)
+                PERMISSION_GRANTED_NO_FILE -> mFragmentNavigation.pushFragment(CouldntFindFileFragment())
+                NO_PERMISSION -> mFragmentNavigation.pushFragment(GetPermissionsFragment())
 
             }
 
-        },3000)
+        },500)
     }
 
 

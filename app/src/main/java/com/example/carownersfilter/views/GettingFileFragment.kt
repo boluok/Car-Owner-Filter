@@ -35,19 +35,25 @@ class GettingFileFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         updateUI()
         setUpObservers()
+        getCSVFile()
+
+    }
+
+    private fun getCSVFile() {
         carOwnerViewModel.getAndSaveCSV(context!!)
     }
 
     private fun setUpObservers() {
         carOwnerViewModel.onDataSaveSuccessful.observeChange(viewLifecycleOwner){
+            println("Status ${it}")
             Handler().postDelayed({
                 when(it){
-                    COULD_NOT_FIND -> mFragmentNavigation.switchFragment(MainActivity.NO_FILE)
+                    COULD_NOT_FIND -> mFragmentNavigation.pushFragment(CouldntFindFileFragment())
                     FOUND -> mFragmentNavigation.switchFragment(MainActivity.MYFILTERS)
 
                 }
 
-            },3000)
+            },1000)
         }
     }
 
