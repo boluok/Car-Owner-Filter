@@ -16,10 +16,11 @@ import com.example.carownersfilter.viewmodel.observeChange
 import kotlinx.android.synthetic.main.fragment_getting_file.*
 import kotlinx.coroutines.delay
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 
 class GettingFileFragment : BaseFragment() {
-    private val carOwnerViewModel: CarOwnersViewModel by inject()
+    private val carOwnerViewModel: CarOwnersViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

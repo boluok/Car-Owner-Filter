@@ -25,6 +25,20 @@
         <item name="android:textColor">#163973</item>
     </style>
 
+    <style name="CarFilterHeader">
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:fontFamily">@font/avenir_black</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">#08261F</item>
+    </style>
+
+    <style name="CarFilterBody">
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:fontFamily">@font/avenir_medium</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#BF163974</item>
+    </style>
+
     <style name="FilterHeader">
         <item name="android:textAlignment">viewStart</item>
         <item name="android:fontFamily">@font/avenir_medium</item>

@@ -10,14 +10,21 @@ import timber.log.Timber
 
 interface CarOwnerRepository {
      fun getAllCarOwners():Flow<List<CarOwner>>
+    suspend fun getAllCarOwnersList():List<CarOwner>
     suspend fun updateCarOwnersDB(carOwners: List<CarOwner>)
-    suspend fun saveCSCData(csvData:List<List<String>>)
-
+    suspend fun saveCSCData(csvData:List<List<String>>):List<CarOwner>
+    fun getAllCarOwnersForFilter(filters: Filters, allCarOwners: List<CarOwner>):List<CarOwner>
 }
 
-class CarOwnerRepositoryImpl(private val carOwnerDao: CarOwnerDao):CarOwnerRepository{
+class CarOwnerRepositoryImpl(private val carOwnerDao: CarOwnerDao,private val filterCarOwnerHelper: FilterCarOwnerHelper):CarOwnerRepository{
     override  fun getAllCarOwners(): Flow<List<CarOwner>> {
         return carOwnerDao.getAllCarOwners()
+    }
+
+    override suspend fun getAllCarOwnersList(): List<CarOwner> {
+        return withContext(IO){
+            carOwnerDao.getAllCarOwnersList()
+        }
     }
 
     override suspend fun updateCarOwnersDB(carOwners: List<CarOwner>) {
@@ -26,10 +33,18 @@ class CarOwnerRepositoryImpl(private val carOwnerDao: CarOwnerDao):CarOwnerRepos
         }
     }
 
-    override suspend fun saveCSCData(csvData: List<List<String>>) {
+    override suspend fun saveCSCData(csvData: List<List<String>>):List<CarOwner> {
         val listOfCarOwners = csvData.map { parseRow(it) }.filterNotNull()
         Timber.d("Car Owners List ${listOfCarOwners.takeLast(5)}")
         updateCarOwnersDB(listOfCarOwners)
+        return listOfCarOwners
+    }
+
+    override fun getAllCarOwnersForFilter(
+        filters: Filters,
+        allCarOwners: List<CarOwner>
+    ): List<CarOwner> {
+        return filterCarOwnerHelper.getAllCarOwnersForFilter(filters, allCarOwners)
     }
 
     private  fun parseRow(row: List<String>): CarOwner? {
