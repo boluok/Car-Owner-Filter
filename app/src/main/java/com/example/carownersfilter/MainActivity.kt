@@ -22,16 +22,6 @@ class MainActivity : BaseActivity() {
     }
 
 
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.actionbar, menu)
-        return true
-    }
-
-
-    }
-
     private fun setUpNavigation() {
         initFragNavController(this, baseFragments, "MAIN", supportFragmentManager, R.id.root)
     }
@@ -67,6 +57,7 @@ class MainActivity : BaseActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
     private fun setActionBar(fragment: Fragment?) {
         if (supportActionBar != null && basefragNavController != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(!basefragNavController.isRootFragment)
@@ -82,5 +73,6 @@ class MainActivity : BaseActivity() {
         setActionBar(fragment)
 
 
+    }
 }
 
