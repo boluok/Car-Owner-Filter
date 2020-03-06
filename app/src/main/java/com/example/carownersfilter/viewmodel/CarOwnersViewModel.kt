@@ -51,6 +51,16 @@ class CarOwnersViewModel(private  val carOwnerRepository: CarOwnerRepository,pri
         }
     }
 
+    fun  getAndSaveCSVFromResource(context:Context){
+        viewModelScope.launch {
+            val csvFile = context.resources.openRawResource(R.raw.car_ownsers_data)
+                val rows: List<List<String>> = withContext(IO){csvReader().readAll(csvFile)}
+                allCarOwners =  carOwnerRepository.saveCSCData(rows)
+                paperPrefs.savePref(PaperPrefs.DATALOADED,true)
+                onDataSaveSuccessful.value = FileStatus.FOUND
+        }
+    }
+
     fun  getAndSaveCSV(file:InputStream){
         viewModelScope.launch {
             showLoading.value = true
