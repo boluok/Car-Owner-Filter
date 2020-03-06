@@ -27,6 +27,15 @@
             app:popEnterAnim="@anim/slide_out_left"
             app:popExitAnim="@anim/slide_out_right"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splash_screen_to_CouldntFragment"
+            app:destination="@id/couldntFindFile"
+            app:popUpTo="@id/nav_graph"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_out_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -38,12 +47,11 @@
             android:id="@+id/permissionToSearchingFile"
             app:destination="@id/searchingFileFragment"
             app:popUpTo="@id/nav_graph"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_out_left"
+            app:popExitAnim="@anim/slide_out_right"
             app:popUpToInclusive="true" />
-<!--        <action-->
-<!--            android:id="@+id/action_firstFragment_to_endChatFragment"-->
-<!--            app:destination="@id/endChatFragment"-->
-<!--            app:popUpTo="@id/nav_graph"-->
-<!--            app:popUpToInclusive="true" />-->
     </fragment>
 
     <fragment
@@ -55,10 +63,18 @@
                     android:id="@+id/searchingToCouldntFind"
                     app:destination="@id/couldntFindFile"
                     app:popUpTo="@id/nav_graph"
+                    app:enterAnim="@anim/slide_in_right"
+                    app:exitAnim="@anim/slide_out_left"
+                    app:popEnterAnim="@anim/slide_out_left"
+                    app:popExitAnim="@anim/slide_out_right"
                     app:popUpToInclusive="true" />
                 <action
                     android:id="@+id/searchingToMyFilters"
                     app:destination="@id/myFiltersFragment"
+                    app:enterAnim="@anim/slide_in_right"
+                    app:exitAnim="@anim/slide_out_left"
+                    app:popEnterAnim="@anim/slide_out_left"
+                    app:popExitAnim="@anim/slide_out_right"
                     app:popUpTo="@id/nav_graph"
                     app:popUpToInclusive="true" />
     </fragment>
@@ -72,12 +88,11 @@
                     android:id="@+id/action_couldntFindToMyFilters"
                     app:destination="@id/myFiltersFragment"
                     app:popUpTo="@id/nav_graph"
+                    app:enterAnim="@anim/slide_in_right"
+                    app:exitAnim="@anim/slide_out_left"
+                    app:popEnterAnim="@anim/slide_out_left"
+                    app:popExitAnim="@anim/slide_out_right"
                     app:popUpToInclusive="true" />
-        <!--        <action-->
-        <!--            android:id="@+id/action_firstFragment_to_endChatFragment"-->
-        <!--            app:destination="@id/endChatFragment"-->
-        <!--            app:popUpTo="@id/nav_graph"-->
-        <!--            app:popUpToInclusive="true" />-->
     </fragment>
 
     <fragment
@@ -88,29 +103,27 @@
                 <action
                     android:id="@+id/myFiltersToFilteredCarOwners"
                     app:destination="@id/filteredCarOwnersFragment"
-                    app:popUpTo="@id/nav_graph"
+                    app:popUpTo="@id/myFiltersFragment"
+                    app:enterAnim="@anim/slide_in_right"
+                    app:exitAnim="@anim/slide_out_left"
+                    app:popEnterAnim="@anim/slide_out_left"
+                    app:popExitAnim="@anim/slide_out_right"
                     app:popUpToInclusive="true" />
-        <!--        <action-->
-        <!--            android:id="@+id/action_firstFragment_to_endChatFragment"-->
-        <!--            app:destination="@id/endChatFragment"-->
-        <!--            app:popUpTo="@id/nav_graph"-->
-        <!--            app:popUpToInclusive="true" />-->
+
+
     </fragment>
 
     <fragment
         android:id="@+id/filteredCarOwnersFragment"
         android:name="com.example.carownersfilter.views.FilteredCarOwnersFragment"
         android:label="My Filters Fragment"
-        tools:layout="@layout/fragment_my_filters">
-        <!--        <action-->
-        <!--            android:id="@+id/action_firstFragment_to_secondFragment"-->
-        <!--            app:destination="@id/secondFragment"-->
-        <!--            app:popUpTo="@id/nav_graph"-->
-        <!--            app:popUpToInclusive="true" />-->
-        <!--        <action-->
-        <!--            android:id="@+id/action_firstFragment_to_endChatFragment"-->
-        <!--            app:destination="@id/endChatFragment"-->
-        <!--            app:popUpTo="@id/nav_graph"-->
-        <!--            app:popUpToInclusive="true" />-->
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_out_left"
+        app:popExitAnim="@anim/slide_out_right"
+        tools:layout="@layout/fragment_filtered_car_owners">
+        <argument
+            android:name="filter"
+            app:argType="com.example.carownersfilter.model.Filters" />
     </fragment>
 </navigation>

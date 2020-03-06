@@ -5,29 +5,31 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.constraintlayout.widget.Group
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
+import com.example.carownersfilter.MainActivity
 import com.example.carownersfilter.R
+import com.example.carownersfilter.model.Filters
+import com.example.carownersfilter.utils.loadImage
+import com.example.carownersfilter.utils.normalcase
+import com.example.carownersfilter.utils.updateRecycler2
+import com.example.carownersfilter.viewmodel.FiltersViewModel
+import com.example.carownersfilter.viewmodel.observeChange
+import kotlinx.android.synthetic.main.fragment_my_filters.*
+import org.koin.android.ext.android.inject
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [MyFiltersFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MyFiltersFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private val filtersViewModel:FiltersViewModel by inject()
+    private var adaptor: RecyclerView.Adapter<*>? = null
+    val noImageViews:List<View> by lazy {
+        listOf(imageViewNoFilters,textViewNoFilters)
     }
 
     override fun onCreateView(
@@ -38,23 +40,72 @@ class MyFiltersFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_my_filters, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MyFiltersFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MyFiltersFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        (activity as MainActivity).supportActionBar?.show()
+        (activity as MainActivity).supportActionBar?.title = "My Filters"
+        setUpRecycler()
+        setUpObservers()
+        updateUI()
+        filtersViewModel.getAllFiltersAPI()
     }
+
+    private fun updateUI() {
+        swipe.setOnRefreshListener { filtersViewModel.getAllFiltersAPI() }
+    }
+
+    private fun setUpObservers() {
+        filtersViewModel.allFiltersResponse.observeChange(viewLifecycleOwner){
+            swipe.isRefreshing = false
+            updateFilters(it)
+        }
+        filtersViewModel.showLoading.observeChange(viewLifecycleOwner){
+            swipe.isRefreshing = true
+        }
+    }
+
+    private fun setUpRecycler() {
+         adaptor = filterRecycler.updateRecycler2(context!!, filtersViewModel.allFilters,R.layout.item_filter, listOf(R.id.ivProfileImage,R.id.groupCountry,R.id.textViewDateRange,R.id.textViewGender,R.id.textViewCountry,R.id.textViewColor),{ innerViews, item ->
+            val ivProfileImage = innerViews[R.id.ivProfileImage] as ImageView
+            val tvDateRange = innerViews[R.id.textViewDateRange] as TextView
+            val tvGender = innerViews[R.id.textViewGender] as TextView
+            val tvCountry = innerViews[R.id.textViewCountry] as TextView
+            val tvColor = innerViews[R.id.textViewColor] as TextView
+             val countryGroup = innerViews[R.id.groupCountry] as Group
+             ivProfileImage.loadImage(item.avatar,context!!)
+             tvDateRange.text = item.fullName
+             tvGender.text = item.gender.normalcase()
+             tvColor.text = item.colors.joinToString(separator = ", ")
+             tvCountry.text = item.countries.joinToString(separator = ", ")
+             if(item.countries.isEmpty()){
+                 countryGroup.visibility = View.GONE
+             }else{
+                 countryGroup.visibility = View.VISIBLE
+             }
+
+
+
+        },{item ->
+             val action = MyFiltersFragmentDirections.myFiltersToFilteredCarOwners(item)
+             findNavController().navigate(action)
+        })
+    }
+
+    private fun updateFilters(filters: List<Filters>) {
+        if(filters.isNullOrEmpty()){
+            filterRecycler.visibility = View.GONE
+            noImageViews.forEach { it.visibility = View.VISIBLE }
+        }else{
+            noImageViews.forEach { it.visibility = View.GONE }
+            filterRecycler.visibility = View.VISIBLE
+
+        }
+        val diffCallBack = FilersDiffUtils(filtersViewModel.allFilters,filters)
+        val diffResult = DiffUtil.calculateDiff(diffCallBack)
+        filtersViewModel.allFilters.clear()
+        filtersViewModel.allFilters.addAll(filters)
+        adaptor?.let { it1 -> diffResult.dispatchUpdatesTo(it1) }
+    }
+
+
 }
