@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.Group
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.carownersfilter.MainActivity
@@ -84,7 +86,8 @@ class MyFiltersFragment : Fragment() {
 
 
         },{item ->
-
+             val action = MyFiltersFragmentDirections.myFiltersToFilteredCarOwners(item)
+             findNavController().navigate(action)
         })
     }
 
