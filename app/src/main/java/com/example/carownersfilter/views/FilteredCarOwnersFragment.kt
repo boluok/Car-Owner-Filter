@@ -6,16 +6,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.carownersfilter.R
+import com.example.carownersfilter.model.Filters
 
 
-class FilteredCarOwnersFragment : Fragment() {
-
+class FilteredCarOwnersFragment : BaseFragment() {
+    lateinit var filter:Filters
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_filtered_car_owners, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        arguments?.let {filter = FilteredCarOwnersFragmentArgs.fromBundle(it).filter }
+        println(filter)
     }
 
 

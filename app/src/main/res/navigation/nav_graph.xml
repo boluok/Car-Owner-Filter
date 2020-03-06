@@ -103,12 +103,14 @@
                 <action
                     android:id="@+id/myFiltersToFilteredCarOwners"
                     app:destination="@id/filteredCarOwnersFragment"
-                    app:popUpTo="@id/nav_graph"
+                    app:popUpTo="@id/myFiltersFragment"
                     app:enterAnim="@anim/slide_in_right"
                     app:exitAnim="@anim/slide_out_left"
                     app:popEnterAnim="@anim/slide_out_left"
                     app:popExitAnim="@anim/slide_out_right"
                     app:popUpToInclusive="true" />
+
+
     </fragment>
 
     <fragment
@@ -120,5 +122,8 @@
         app:popEnterAnim="@anim/slide_out_left"
         app:popExitAnim="@anim/slide_out_right"
         tools:layout="@layout/fragment_my_filters">
+        <argument
+            android:name="filter"
+            app:argType="com.example.carownersfilter.model.Filters" />
     </fragment>
 </navigation>

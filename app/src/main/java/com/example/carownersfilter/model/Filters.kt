@@ -1,5 +1,7 @@
 package com.example.carownersfilter.model
 
+import java.io.Serializable
+
 data class Filters(
     val avatar: String,
     val colors: List<String>,
@@ -8,4 +10,4 @@ data class Filters(
     val fullName: String,
     val gender: String,
     val id: String
-)
+):Serializable
