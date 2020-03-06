@@ -3,28 +3,25 @@ package com.example.carownersfilter
 
 import android.os.Bundle
 import android.view.Menu
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import com.example.carownersfilter.model.CarOwner
-import com.example.carownersfilter.repository.CarOwnerRepository
-import com.example.carownersfilter.repository.FilterCarOwnerHelper
-import com.example.carownersfilter.viewmodel.FiltersViewModel
-import org.koin.android.ext.android.inject
+import android.view.MenuItem
+import androidx.fragment.app.Fragment
+import com.example.carownersfilter.utils.BaseActivity
+import com.example.carownersfilter.views.*
+import com.ncapdevi.fragnav.FragNavController
 
 
-class MainActivity : AppCompatActivity() {
-    private val carOwnerRepository:CarOwnerRepository by inject()
-
-    private val filtersViewModel:FiltersViewModel by inject()
-    private val filterCarOwnerHelper:FilterCarOwnerHelper by inject()
-    private lateinit var carOwnersList:List<CarOwner>
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        supportActionBar?.hide()
+class MainActivity : BaseActivity() {
+    private val baseFragments by lazy {
+        listOf(
+            SplashScreenFragment(),
+            GetPermissionsFragment(),
+            GettingFileFragment(),
+            MyFiltersFragment(),
+            CouldntFindFileFragment()
+        )
     }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
@@ -33,14 +30,57 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
-
-}
-fun NavController.navigateUpOrFinish(activity: AppCompatActivity): Boolean {
-    return if (navigateUp()) {
-        true
-    } else {
-        activity.finish()
-        true
     }
+
+    private fun setUpNavigation() {
+        initFragNavController(this, baseFragments, "MAIN", supportFragmentManager, R.id.root)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.actionbar, menu)
+        return true
+    }
+
+    companion object {
+        val SPLASH_SCREEN = FragNavController.TAB1
+        val GET_PERMISSION = FragNavController.TAB2
+        val GETTING_FILE = FragNavController.TAB3
+        val MYFILTERS = FragNavController.TAB4
+        val NO_FILE = FragNavController.TAB5
+    }
+
+    override fun onFragmentTransaction(
+        fragment: Fragment?,
+        transactionType: FragNavController.TransactionType
+    ) {
+        //supportActionBar?.setDisplayHomeAsUpEnabled(basefragNavController.isRootFragment.not())
+        setActionBar(fragment)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+    private fun setActionBar(fragment: Fragment?) {
+        if (supportActionBar != null && basefragNavController != null) {
+            supportActionBar!!.setDisplayHomeAsUpEnabled(!basefragNavController.isRootFragment)
+        }
+        if (fragment is MyFiltersFragment || fragment is FilteredCarOwnersFragment) {
+            supportActionBar?.show()
+        } else {
+            supportActionBar?.hide()
+        }
+    }
+
+    override fun onTabTransaction(fragment: Fragment?, index: Int) {
+        setActionBar(fragment)
+
+
 }
+

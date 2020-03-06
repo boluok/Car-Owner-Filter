@@ -117,5 +117,9 @@ dependencies {
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'io.paperdb:paperdb:2.6'
 
+    //FragNavigation
+    implementation 'com.ncapdevi:frag-nav:3.2.0'
+
+
 
 }

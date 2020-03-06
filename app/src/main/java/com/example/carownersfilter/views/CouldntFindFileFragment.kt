@@ -10,7 +10,7 @@ import com.example.carownersfilter.utils.loadImage
 import kotlinx.android.synthetic.main.fragment_couldnt_find_file.*
 
 
-class CouldntFindFileFragment : Fragment() {
+class CouldntFindFileFragment : BaseFragment() {
 
 
     override fun onCreateView(

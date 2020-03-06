@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import com.example.carownersfilter.MainActivity
 import com.example.carownersfilter.R
 import com.example.carownersfilter.utils.CheckPermissionUtil
 import com.example.carownersfilter.utils.loadImage
@@ -34,7 +35,8 @@ class GetPermissionsFragment : BaseFragment() {
         buttonPermissions.setOnClickListener {
             CheckPermissionUtil.checkWriteSd(context!!,object :PermissionCallback(){
                 override fun onPermissionGranted() {
-                    findNavController().navigate(R.id.permissionToSearchingFile)
+                   mFragmentNavigation.switchFragment(MainActivity.GETTING_FILE)
+
                 }
 
                 override fun onPermissionDenied() {

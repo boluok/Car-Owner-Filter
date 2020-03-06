@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.carownersfilter.MainActivity
 import com.example.carownersfilter.R
 import com.example.carownersfilter.utils.loadImage
 import com.example.carownersfilter.viewmodel.CarOwnersViewModel
@@ -34,12 +35,13 @@ class SplashScreenFragment :BaseFragment(){
 
     private fun updateUI() {
         logoIV.loadImage(R.drawable.app_logo,context!!)
-
+        (activity as MainActivity).supportActionBar?.hide()
         Handler().postDelayed({
             when(carOwnerViewModel.getStatus(context!!)){
-                PERMISSION_GRANTED_DATA_LOADED -> findNavController().navigate(R.id.action_splash_screen_to_filtersFragment)
-                PERMISSION_GRANTED_NO_FILE -> findNavController().navigate(R.id.action_splash_screen_to_CouldntFragment)
-                NO_PERMISSION -> findNavController().navigate(R.id.action_splash_screen_to_permissionsFragment)
+                PERMISSION_GRANTED_DATA_LOADED -> mFragmentNavigation.switchFragment(MainActivity.MYFILTERS)
+                PERMISSION_GRANTED_NO_FILE -> mFragmentNavigation.switchFragment(MainActivity.NO_FILE)
+                NO_PERMISSION -> mFragmentNavigation.switchFragment(MainActivity.GET_PERMISSION)
+
             }
 
         },3000)

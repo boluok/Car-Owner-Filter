@@ -1,10 +1,11 @@
 package com.example.carownersfilter.views
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.Group
@@ -12,6 +13,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.carownersfilter.R
 import com.example.carownersfilter.model.Filters
+import com.example.carownersfilter.utils.argument
+import com.example.carownersfilter.utils.updateRecycler2
+import com.example.carownersfilter.utils.withArguments
+import com.example.carownersfilter.viewmodel.CarOwnersViewModel
+import kotlinx.android.synthetic.main.fragment_filtered_car_owners.*
 import com.example.carownersfilter.utils.loadImage
 import com.example.carownersfilter.utils.normalcase
 import com.example.carownersfilter.utils.updateRecycler2
@@ -22,7 +28,7 @@ import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 
 class FilteredCarOwnersFragment : BaseFragment() {
-    lateinit var filter:Filters
+     val filter:Filters  by argument(FILTER)
     private var adaptor: RecyclerView.Adapter<*>? = null
     private val carOwnerViewModel: CarOwnersViewModel by sharedViewModel()
     override fun onCreateView(
@@ -35,10 +41,11 @@ class FilteredCarOwnersFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments?.let {filter = FilteredCarOwnersFragmentArgs.fromBundle(it).filter }
-        println(filter)
         setUpRecycler()
     }
+
+
+
 
     private fun setUpRecycler() {
        val carOwners = carOwnerViewModel.getCarOwnersForFilter(filter)
@@ -61,6 +68,14 @@ class FilteredCarOwnersFragment : BaseFragment() {
 
         })
     }
+
+    companion object{
+        val FILTER = "Filter"
+        fun newInstance(filter:Filters):FilteredCarOwnersFragment{
+            return FilteredCarOwnersFragment().withArguments(FILTER to filter )
+        }
+    }
+
 
 
 }
