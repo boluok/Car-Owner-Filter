@@ -44,6 +44,7 @@ class GettingFileFragment : BaseFragment() {
                 when(it){
                     COULD_NOT_FIND -> mFragmentNavigation.switchFragment(MainActivity.NO_FILE)
                     FOUND -> mFragmentNavigation.switchFragment(MainActivity.MYFILTERS)
+
                 }
 
             },3000)

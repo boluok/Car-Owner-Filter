@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.constraintlayout.widget.Group
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.carownersfilter.R
@@ -15,6 +18,12 @@ import com.example.carownersfilter.utils.updateRecycler2
 import com.example.carownersfilter.utils.withArguments
 import com.example.carownersfilter.viewmodel.CarOwnersViewModel
 import kotlinx.android.synthetic.main.fragment_filtered_car_owners.*
+import com.example.carownersfilter.utils.loadImage
+import com.example.carownersfilter.utils.normalcase
+import com.example.carownersfilter.utils.updateRecycler2
+import com.example.carownersfilter.viewmodel.CarOwnersViewModel
+import kotlinx.android.synthetic.main.fragment_filtered_car_owners.*
+import kotlinx.android.synthetic.main.fragment_my_filters.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 
@@ -34,6 +43,7 @@ class FilteredCarOwnersFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpRecycler()
     }
+
 
 
 
@@ -65,6 +75,7 @@ class FilteredCarOwnersFragment : BaseFragment() {
             return FilteredCarOwnersFragment().withArguments(FILTER to filter )
         }
     }
+
 
 
 }

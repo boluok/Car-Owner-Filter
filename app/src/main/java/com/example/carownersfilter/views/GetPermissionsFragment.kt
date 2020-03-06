@@ -36,6 +36,7 @@ class GetPermissionsFragment : BaseFragment() {
             CheckPermissionUtil.checkWriteSd(context!!,object :PermissionCallback(){
                 override fun onPermissionGranted() {
                    mFragmentNavigation.switchFragment(MainActivity.GETTING_FILE)
+
                 }
 
                 override fun onPermissionDenied() {

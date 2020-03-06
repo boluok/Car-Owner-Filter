@@ -48,6 +48,7 @@ class MyFiltersFragment : BaseFragment() {
         updateUI()
         filtersViewModel.getAllFiltersAPI()
         setRecyclerState(filtersViewModel.allFilters)
+
     }
 
     private fun updateUI() {
@@ -115,6 +116,7 @@ class MyFiltersFragment : BaseFragment() {
             filterRecycler.visibility = View.VISIBLE
 
         }
+
     }
 
 

@@ -21,11 +21,14 @@ class MainActivity : BaseActivity() {
         )
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setUpNavigation()
-        supportActionBar?.hide()
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.actionbar, menu)
+        return true
+    }
+
 
     }
 
@@ -79,5 +82,5 @@ class MainActivity : BaseActivity() {
         setActionBar(fragment)
 
 
-    }
 }
+

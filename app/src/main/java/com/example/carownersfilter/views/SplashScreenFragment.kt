@@ -41,6 +41,7 @@ class SplashScreenFragment :BaseFragment(){
                 PERMISSION_GRANTED_DATA_LOADED -> mFragmentNavigation.switchFragment(MainActivity.MYFILTERS)
                 PERMISSION_GRANTED_NO_FILE -> mFragmentNavigation.switchFragment(MainActivity.NO_FILE)
                 NO_PERMISSION -> mFragmentNavigation.switchFragment(MainActivity.GET_PERMISSION)
+
             }
 
         },3000)
