@@ -12,7 +12,7 @@
         <action
             android:id="@+id/action_splash_screen_to_permissionsFragment"
             app:destination="@id/permissionsFragment"
-            app:popUpTo="@id/nav_graph"
+            app:popUpTo="@id/myFiltersFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_out_left"
@@ -21,7 +21,7 @@
         <action
             android:id="@+id/action_splash_screen_to_filtersFragment"
             app:destination="@id/myFiltersFragment"
-            app:popUpTo="@id/nav_graph"
+            app:popUpTo="@id/myFiltersFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_out_left"

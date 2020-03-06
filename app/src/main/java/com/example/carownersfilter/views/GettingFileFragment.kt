@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.example.carownersfilter.MainActivity
 import com.example.carownersfilter.R
 import com.example.carownersfilter.utils.loadImage
 import com.example.carownersfilter.viewmodel.CarOwnersViewModel
@@ -41,8 +42,8 @@ class GettingFileFragment : BaseFragment() {
         carOwnerViewModel.onDataSaveSuccessful.observeChange(viewLifecycleOwner){
             Handler().postDelayed({
                 when(it){
-                    COULD_NOT_FIND -> findNavController().navigate(R.id.searchingToCouldntFind)
-                    FOUND -> findNavController().navigate(R.id.searchingToMyFilters)
+                    COULD_NOT_FIND -> mFragmentNavigation.switchFragment(MainActivity.NO_FILE)
+                    FOUND -> mFragmentNavigation.switchFragment(MainActivity.MYFILTERS)
                 }
 
             },3000)

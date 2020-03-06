@@ -22,15 +22,14 @@ import com.example.carownersfilter.viewmodel.FiltersViewModel
 import com.example.carownersfilter.viewmodel.observeChange
 import kotlinx.android.synthetic.main.fragment_my_filters.*
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 
-class MyFiltersFragment : Fragment() {
+class MyFiltersFragment : BaseFragment() {
 
-    private val filtersViewModel:FiltersViewModel by inject()
+    private val filtersViewModel:FiltersViewModel by sharedViewModel()
     private var adaptor: RecyclerView.Adapter<*>? = null
-    val noImageViews:List<View> by lazy {
-        listOf(imageViewNoFilters,textViewNoFilters)
-    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +47,7 @@ class MyFiltersFragment : Fragment() {
         setUpObservers()
         updateUI()
         filtersViewModel.getAllFiltersAPI()
+        setRecyclerState(filtersViewModel.allFilters)
     }
 
     private fun updateUI() {
@@ -86,25 +86,35 @@ class MyFiltersFragment : Fragment() {
 
 
         },{item ->
-             val action = MyFiltersFragmentDirections.myFiltersToFilteredCarOwners(item)
-             findNavController().navigate(action)
+            mFragmentNavigation.pushFragment(FilteredCarOwnersFragment.newInstance(item))
         })
     }
 
-    private fun updateFilters(filters: List<Filters>) {
-        if(filters.isNullOrEmpty()){
-            filterRecycler.visibility = View.GONE
-            noImageViews.forEach { it.visibility = View.VISIBLE }
-        }else{
-            noImageViews.forEach { it.visibility = View.GONE }
-            filterRecycler.visibility = View.VISIBLE
+    override fun onResume() {
+        super.onResume()
+        setRecyclerState(filtersViewModel.allFilters)
+    }
 
-        }
+    private fun updateFilters(filters: List<Filters>) {
+        setRecyclerState(filters)
         val diffCallBack = FilersDiffUtils(filtersViewModel.allFilters,filters)
         val diffResult = DiffUtil.calculateDiff(diffCallBack)
         filtersViewModel.allFilters.clear()
         filtersViewModel.allFilters.addAll(filters)
         adaptor?.let { it1 -> diffResult.dispatchUpdatesTo(it1) }
+    }
+
+    private fun setRecyclerState(filters: List<Filters>) {
+        if(filters.isNullOrEmpty()){
+            filterRecycler.visibility = View.GONE
+            imageViewNoFilters.visibility = View.VISIBLE
+            textViewNoFilters.visibility = View.VISIBLE
+        }else{
+            imageViewNoFilters.visibility = View.GONE
+            textViewNoFilters.visibility = View.GONE
+            filterRecycler.visibility = View.VISIBLE
+
+        }
     }
 
 
