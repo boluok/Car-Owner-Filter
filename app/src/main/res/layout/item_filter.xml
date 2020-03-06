@@ -35,7 +35,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
-                android:text="Date range:"
+                android:text="Name:"
                 app:layout_constraintEnd_toStartOf="@+id/textViewDateRange"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
@@ -46,8 +46,8 @@
                 style="@style/FilterHeader"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:text="1992 - 2018"
@@ -59,7 +59,7 @@
             <TextView
                 android:id="@+id/textView8"
                 style="@style/FilterHeader"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="Gender:"
@@ -72,69 +72,60 @@
                 style="@style/FilterHeader"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:text="Male"
                 app:layout_constraintBaseline_toBaselineOf="@+id/textView8"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/textView8" />
+                app:layout_constraintStart_toStartOf="@+id/textViewDateRange" />
 
             <TextView
                 android:id="@+id/textView10"
                 style="@style/FilterHeader"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:text="Country:"
+                app:layout_constraintBaseline_toBaselineOf="@+id/textViewCountry"
                 app:layout_constraintEnd_toStartOf="@+id/textViewCountry"
-                app:layout_constraintStart_toStartOf="@+id/textView6"
-                app:layout_constraintTop_toBottomOf="@+id/textViewGender" />
+                app:layout_constraintStart_toStartOf="@+id/textView6" />
 
             <TextView
                 android:id="@+id/textViewCountry"
                 style="@style/FilterHeader"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:text="Nigeria, Canada"
-                app:layout_constraintBaseline_toBaselineOf="@+id/textView10"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/textView10" />
+                app:layout_constraintStart_toStartOf="@+id/textViewDateRange"
+                app:layout_constraintTop_toBottomOf="@+id/textViewGender" />
 
             <TextView
                 android:id="@+id/textView12"
                 style="@style/FilterHeader"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
                 android:text="Color:"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@+id/textViewColor"
                 app:layout_constraintEnd_toStartOf="@+id/textViewColor"
-                app:layout_constraintStart_toStartOf="@+id/textView6"
-                app:layout_constraintTop_toBottomOf="@+id/textViewCountry" />
+                app:layout_constraintStart_toStartOf="@+id/textView6" />
 
             <TextView
                 android:id="@+id/textViewColor"
                 style="@style/FilterHeader"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
                 android:text="Blue, Red, Black"
-                app:layout_constraintBaseline_toBaselineOf="@+id/textView12"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/textView12" />
+                app:layout_constraintStart_toStartOf="@+id/textViewDateRange"
+                app:layout_constraintTop_toBottomOf="@+id/textViewCountry" />
 
             <ImageView
                 android:id="@+id/ivProfileImage"
@@ -146,6 +137,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/textView6"
                 app:srcCompat="@drawable/dummy_image" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/groupCountry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:constraint_referenced_ids="textViewCountry,textView10" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/groupColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="textView12,textViewColor" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

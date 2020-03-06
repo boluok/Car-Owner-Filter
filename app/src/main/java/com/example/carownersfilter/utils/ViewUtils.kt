@@ -120,74 +120,26 @@ fun RecyclerView.updateRecycler(context: Context, listOfItems:List<Any>, layout:
           binder(innerViews,item)
       }
       reyclerAdaptor.addOnClickListener { item, position -> onClickPosition(item) }
-
       this.adapter = reyclerAdaptor
-
-
       return adapter
   }
 
-  fun <T:Any> RecyclerView.updateRecycler2(context: Context, listOfItems:List<T>, layout:Int, layoutManager: GridLayoutManager, listOfLayout:List<Int>, binder: (Map<Int, View>, T) -> Unit, onClickPosition:(T) -> Unit): RecyclerView.Adapter<*>? {
+  fun <T:Any> RecyclerView.updateRecycler2(context: Context, listOfItems:List<T>, layout:Int, listOfLayout:List<Int>, binder: (Map<Int, View>, T) -> Unit, onClickPosition:(T) -> Unit,noImageViews:List<View>): RecyclerView.Adapter<*>? {
+
       this.layoutManager =layoutManager
       val reyclerAdaptor = RecyclerAdapterUtil(context,listOfItems,layout)
       reyclerAdaptor.addViewsList(listOfLayout)
       reyclerAdaptor.addOnDataBindListener{itemView, item, position, innerViews ->
+
           binder(innerViews,item)
       }
       reyclerAdaptor.addOnClickListener { item, position -> onClickPosition(item) }
 
       this.adapter = reyclerAdaptor
 
+
       return adapter
   }
 
-fun <T:Any> RecyclerView.updateRecyclerStaggered(context: Context, listOfItems:List<T>, layout:Int, listOfLayout:List<Int>, binder: (Map<Int, View>, Int) -> Unit, onClickPosition:(Int) -> Unit): RecyclerView.Adapter<*>? {
-    this.layoutManager = StaggeredGridLayoutManager(2,
-            StaggeredGridLayoutManager.VERTICAL)
-    val reyclerAdaptor = RecyclerAdapterUtil<T>(context,listOfItems,layout)
-    reyclerAdaptor.addViewsList(listOfLayout)
-    reyclerAdaptor.addOnDataBindListener{itemView, item, position, innerViews ->
-        binder(innerViews,position)
-    }
-    reyclerAdaptor.addOnClickListener { newking20item, position -> onClickPosition(position) }
 
-    this.adapter = reyclerAdaptor
-
-
-    return adapter
-}
-
-
-
-fun ViewPager.setUpViewPager(viewPagerObjectList:List<ViewPagerObject>, fragmentStateManager: FragmentManager){
-    val pagerAdapter = Utils.MyViewPageStateAdapter(fragmentStateManager)
-    viewPagerObjectList.forEach {
-        pagerAdapter.addFragment(it.fragment,it.title)
-    }
-    this.apply {
-        adapter = pagerAdapter
-    }
-}
-
-fun ViewPager.setUpViewPager(viewPagerObjectList:List<ViewPagerObject>, fragmentStateManager: FragmentManager, transform: ViewPager.PageTransformer){
-    val pagerAdapter = Utils.MyViewPageStateAdapter(fragmentStateManager)
-    viewPagerObjectList.forEach {
-        pagerAdapter.addFragment(it.fragment,it.title)
-    }
-    this.apply {
-        adapter = pagerAdapter
-        setPageTransformer(true,transform)
-    }
-}
-fun ViewPager.setUpViewPager(viewPagerObjectList:List<ViewPagerObject>, transform: ViewPager.PageTransformer, onPageChangeListener: ViewPager.OnPageChangeListener, fragmentStateManager: FragmentManager){
-    val pagerAdapter = Utils.MyViewPageStateAdapter(fragmentStateManager)
-    viewPagerObjectList.forEach {
-        pagerAdapter.addFragment(it.fragment,it.title)
-    }
-    this.apply {
-        adapter = pagerAdapter
-        setPageTransformer(true,transform)
-        addOnPageChangeListener(onPageChangeListener)
-    }
-}
 

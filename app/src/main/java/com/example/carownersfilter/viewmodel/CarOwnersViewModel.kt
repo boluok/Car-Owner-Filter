@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.carownersfilter.R
 import com.example.carownersfilter.local.room.PaperPrefs
 import com.example.carownersfilter.local.room.getBooleanPref
+import com.example.carownersfilter.local.room.savePref
 import com.example.carownersfilter.repository.CarOwnerRepository
 import com.example.carownersfilter.utils.CheckPermissionUtil
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
@@ -26,8 +27,8 @@ class CarOwnersViewModel(private  val carOwnerRepository: CarOwnerRepository,pri
         viewModelScope.launch {
             val csvData = withContext(IO){context.resources.openRawResource(R.raw.car_ownsers_data)}
             val rows: List<List<String>> = withContext(IO){csvReader().readAll(csvData)}
-            println(rows[0])
             carOwnerRepository.saveCSCData(rows)
+            paperPrefs.savePref(PaperPrefs.DATALOADED,true)
             onDataSaveSuccessful.value = FileStatus.FOUND
         }
     }
