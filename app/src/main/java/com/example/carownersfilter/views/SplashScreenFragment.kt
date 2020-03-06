@@ -14,9 +14,10 @@ import com.example.carownersfilter.viewmodel.UserStatus
 import com.example.carownersfilter.viewmodel.UserStatus.*
 import kotlinx.android.synthetic.main.fragment_splash_screen.*
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class SplashScreenFragment :BaseFragment(){
-    private val carOwnersViewModel:CarOwnersViewModel by inject()
+    private val carOwnerViewModel: CarOwnersViewModel by sharedViewModel()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,7 +36,7 @@ class SplashScreenFragment :BaseFragment(){
         logoIV.loadImage(R.drawable.app_logo,context!!)
 
         Handler().postDelayed({
-            when(carOwnersViewModel.getStatus(context!!)){
+            when(carOwnerViewModel.getStatus(context!!)){
                 PERMISSION_GRANTED_DATA_LOADED -> findNavController().navigate(R.id.action_splash_screen_to_filtersFragment)
                 PERMISSION_GRANTED_NO_FILE -> findNavController().navigate(R.id.action_splash_screen_to_CouldntFragment)
                 NO_PERMISSION -> findNavController().navigate(R.id.action_splash_screen_to_permissionsFragment)

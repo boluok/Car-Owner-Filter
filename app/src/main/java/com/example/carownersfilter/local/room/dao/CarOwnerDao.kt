@@ -13,6 +13,9 @@ interface CarOwnerDao:BaseDao<CarOwner> {
     @Query("select * from car_owner ")
     fun getAllCarOwners(): Flow<List<CarOwner>>
 
+    @Query("select * from car_owner ")
+    fun getAllCarOwnersList():List<CarOwner>
+
     @Query("DELETE FROM car_owner")
     fun deleteAllCarOwners()
 

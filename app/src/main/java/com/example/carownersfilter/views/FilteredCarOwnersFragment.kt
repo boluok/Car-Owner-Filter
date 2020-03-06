@@ -15,13 +15,16 @@ import com.example.carownersfilter.model.Filters
 import com.example.carownersfilter.utils.loadImage
 import com.example.carownersfilter.utils.normalcase
 import com.example.carownersfilter.utils.updateRecycler2
+import com.example.carownersfilter.viewmodel.CarOwnersViewModel
 import kotlinx.android.synthetic.main.fragment_filtered_car_owners.*
 import kotlinx.android.synthetic.main.fragment_my_filters.*
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 
 class FilteredCarOwnersFragment : BaseFragment() {
     lateinit var filter:Filters
     private var adaptor: RecyclerView.Adapter<*>? = null
+    private val carOwnerViewModel: CarOwnersViewModel by sharedViewModel()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,8 +41,20 @@ class FilteredCarOwnersFragment : BaseFragment() {
     }
 
     private fun setUpRecycler() {
-        adaptor = recycler.updateRecycler2(context!!, listOf(1,2,3,4,56,67,7),R.layout.item_car_owner, listOf(),{ innerViews, item ->
-
+       val carOwners = carOwnerViewModel.getCarOwnersForFilter(filter)
+        adaptor = recycler.updateRecycler2(context!!,carOwners,R.layout.item_car_owner, listOf(R.id.textViewCarOwnerName,R.id.textViewCarModel,R.id.textViewGender,
+            R.id.textViewNationality,R.id.textViewProfile
+            ),{ innerViews, item ->
+            val tvCarOwners = innerViews[R.id.textViewCarOwnerName] as TextView
+            val tvCarModel = innerViews[R.id.textViewCarModel] as TextView
+            val tvGender = innerViews[R.id.textViewGender] as TextView
+            val tvNationality = innerViews[R.id.textViewNationality] as TextView
+            val tvProfile = innerViews[R.id.textViewProfile] as TextView
+            tvCarOwners.text = item.first_name + " " + item.last_name
+            tvCarModel.text = item.car_model
+            tvGender.text = item.gender
+            tvNationality.text = item.country
+            tvProfile.text = item.bio
 
 
         },{item ->
