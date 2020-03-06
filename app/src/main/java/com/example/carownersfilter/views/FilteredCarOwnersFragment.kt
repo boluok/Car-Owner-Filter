@@ -11,6 +11,7 @@ import androidx.constraintlayout.widget.Group
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.carownersfilter.R
+import com.example.carownersfilter.model.CarOwner
 import com.example.carownersfilter.model.Filters
 import com.example.carownersfilter.utils.argument
 import com.example.carownersfilter.utils.updateRecycler2
@@ -21,7 +22,6 @@ import com.example.carownersfilter.utils.normalcase
 import com.example.carownersfilter.utils.updateRecycler2
 import com.example.carownersfilter.viewmodel.CarOwnersViewModel
 import kotlinx.android.synthetic.main.fragment_filtered_car_owners.*
-import kotlinx.android.synthetic.main.fragment_my_filters.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 
@@ -46,7 +46,9 @@ class FilteredCarOwnersFragment : BaseFragment() {
 
 
     private fun setUpRecycler() {
+
        val carOwners = carOwnerViewModel.getCarOwnersForFilter(filter)
+        setRecyclerState(carOwners)
         adaptor = recycler.updateRecycler2(context!!,carOwners,R.layout.item_car_owner, listOf(R.id.textViewCarOwnerName,R.id.textViewCarModel,R.id.textViewGender,
             R.id.textViewNationality,R.id.textViewProfile
             ),{ innerViews, item ->
@@ -65,6 +67,21 @@ class FilteredCarOwnersFragment : BaseFragment() {
         },{item ->
 
         })
+    }
+
+
+    private fun setRecyclerState(filters: List<CarOwner>) {
+        if(filters.isNullOrEmpty()){
+            recycler.visibility = View.GONE
+            imageViewNoFilters.visibility = View.VISIBLE
+            textViewNoFilters.visibility = View.VISIBLE
+        }else{
+            imageViewNoFilters.visibility = View.GONE
+            textViewNoFilters.visibility = View.GONE
+            recycler.visibility = View.VISIBLE
+
+        }
+
     }
 
     companion object{

@@ -15,10 +15,7 @@ class MainActivity : BaseActivity() {
     private val baseFragments by lazy {
         listOf(
             SplashScreenFragment(),
-            GetPermissionsFragment(),
-            GettingFileFragment(),
-            MyFiltersFragment(),
-            CouldntFindFileFragment()
+            MyFiltersFragment()
         )
     }
 
@@ -43,10 +40,10 @@ class MainActivity : BaseActivity() {
 
     companion object {
         val SPLASH_SCREEN = FragNavController.TAB1
-        val GET_PERMISSION = FragNavController.TAB2
-        val GETTING_FILE = FragNavController.TAB3
-        val MYFILTERS = FragNavController.TAB4
-        val NO_FILE = FragNavController.TAB5
+        val MYFILTERS = FragNavController.TAB2
+//        val GETTING_FILE = FragNavController.TAB3
+//        val MYFILTERS = FragNavController.TAB4
+//        val NO_FILE = FragNavController.TAB5
     }
 
     override fun onFragmentTransaction(

@@ -3,6 +3,7 @@ package com.example.carownersfilter.viewmodel
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.os.Environment
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -18,6 +19,8 @@ import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
+import java.io.InputStream
 
 class CarOwnersViewModel(private  val carOwnerRepository: CarOwnerRepository,private val paperPrefs: PaperPrefs) :BaseViewModel(){
 
@@ -35,11 +38,28 @@ class CarOwnersViewModel(private  val carOwnerRepository: CarOwnerRepository,pri
 
      fun  getAndSaveCSV(context:Context){
         viewModelScope.launch {
-            val csvData = withContext(IO){context.resources.openRawResource(R.raw.car_ownsers_data)}
-            val rows: List<List<String>> = withContext(IO){csvReader().readAll(csvData)}
+            val csvFile = File(  "${Environment.getExternalStorageDirectory()}/decagon/car_ownsers_data.csv")
+            if(csvFile.exists()){
+                val rows: List<List<String>> = withContext(IO){csvReader().readAll(csvFile)}
+                allCarOwners =  carOwnerRepository.saveCSCData(rows)
+                paperPrefs.savePref(PaperPrefs.DATALOADED,true)
+                showLoading.value = false
+                onDataSaveSuccessful.value = FileStatus.FOUND
+            }else{
+                onDataSaveSuccessful.value = FileStatus.COULD_NOT_FIND
+            }
+        }
+    }
+
+    fun  getAndSaveCSV(file:InputStream){
+        viewModelScope.launch {
+            showLoading.value = true
+            val rows: List<List<String>> = withContext(IO){csvReader().readAll(file)}
             allCarOwners =  carOwnerRepository.saveCSCData(rows)
             paperPrefs.savePref(PaperPrefs.DATALOADED,true)
+            showLoading.value = false
             onDataSaveSuccessful.value = FileStatus.FOUND
+
         }
     }
 
